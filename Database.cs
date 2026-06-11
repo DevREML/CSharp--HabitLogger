@@ -13,7 +13,17 @@ class Database
         var command = connection.CreateCommand();
         command.CommandText = "CREATE TABLE IF NOT EXISTS habits (Id INTEGER PRIMARY KEY AUTOINCREMENT, Date TEXT, Quantity INTEGER)";
         command.ExecuteNonQuery();
-                
+    }
+
+    public void InsertHabit(string date, int quantity)
+    {
+        using var connection = new SqliteConnection("Data Source=habitsDatabase.db");
+        connection.Open();
+        var command = connection.CreateCommand();
+        command.CommandText = "INSERT INTO habits (Date, Quantity) VALUES (@date, @quantity)";
+        command.Parameters.AddWithValue("@date", date);
+        command.Parameters.AddWithValue("@quantity", quantity);
+        command.ExecuteNonQuery();
     }
   
 }

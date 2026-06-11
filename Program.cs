@@ -1,7 +1,5 @@
 ﻿// Calling HabitsDatabase.db
 
-using System.Data;
-
 var database = new Database();
 database.CreateDatabase();
 
@@ -14,7 +12,6 @@ switch (choosenOption)
 {
     case "1":
         // Ask the user for input 
-        Console.WriteLine($"You have choosen {choosenOption}: Insert new log occurrence!");
         Console.WriteLine("Insert the date");
         string date = Console.ReadLine();
         
@@ -24,12 +21,22 @@ switch (choosenOption)
         // Insert into database
         database.InsertHabit(date, quantity);
         break;
+    
     case "2":
-        Console.WriteLine($"You have choosen {choosenOption}: View logs!");
+        database.ViewHabit();
         break;
+    
     case "3":
-        Console.WriteLine($"You have choosen {choosenOption}: Update logs!");
+        database.ViewHabit();
+        Console.WriteLine("Select a Id you wish to change");
+        int updatedId = int.Parse(Console.ReadLine());
+        Console.WriteLine($"Choose a new date");
+        string updatedDate = Console.ReadLine();
+        Console.WriteLine($"Choose a new quantity");
+        int updatedQuantity = int.Parse(Console.ReadLine());
+        database.UpdateHabit(updatedId, updatedDate, updatedQuantity);
         break;
+    
     case "4":
         Console.WriteLine($"You have choosen {choosenOption}!: Delete logs!");
         break;

@@ -25,9 +25,35 @@ class Database
         command.Parameters.AddWithValue("@quantity", quantity);
         command.ExecuteNonQuery();
     }
+
+    public void ViewHabit()
+    {
+        using var connection = new SqliteConnection("Data Source=habitsDatabase.db");
+        connection.Open();
+        var command = connection.CreateCommand();
+        command.CommandText = "SELECT * FROM habits";
+        var reader = command.ExecuteReader();
+        while (reader.Read())
+            {
+            var date = reader["Date"].ToString();
+            var quantity = int.Parse(reader["Quantity"].ToString());
+            var Id = int.Parse(reader["Id"].ToString());
+            Console.WriteLine($"{Id} - {date} - {quantity}");
+            }
+        reader.Close();
+        connection.Close();
+    }
+
+    public void UpdateHabit(int Id, string date, int quantity)
+    {
+        using var connection = new SqliteConnection("Data Source=habitsDatabase.db");
+        connection.Open();
+        var command = connection.CreateCommand();
+        command.CommandText = "UPDATE habits SET Date = @date, Quantity = @quantity WHERE Id = @Id";
+        command.Parameters.AddWithValue("@date", date);
+        command.Parameters.AddWithValue("@quantity", quantity);
+        command.Parameters.AddWithValue("@Id", Id);
+        command.ExecuteNonQuery();
+    }
   
 }
-
-// create a table in the database, where the habit will be logged
-
-// store and retrieve data

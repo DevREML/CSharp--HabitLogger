@@ -15,32 +15,51 @@ switch (choosenOption)
         Console.WriteLine("Insert the date");
         string date = Console.ReadLine();
         
-        Console.WriteLine("Insert the quantity");
-        int quantity = int.Parse(Console.ReadLine());
+        int quantity = GetValidInt("Insert the quantity");
         
         // Insert into database
         database.InsertHabit(date, quantity);
         break;
     
     case "2":
+        // Viewing the database
         database.ViewHabit();
         break;
     
     case "3":
+        // Updating the database
         database.ViewHabit();
-        Console.WriteLine("Select a Id you wish to change");
-        int updatedId = int.Parse(Console.ReadLine());
+        int updatedId = GetValidInt("Select the Id you wish to change");
         Console.WriteLine($"Choose a new date");
         string updatedDate = Console.ReadLine();
-        Console.WriteLine($"Choose a new quantity");
-        int updatedQuantity = int.Parse(Console.ReadLine());
+        int updatedQuantity = GetValidInt("Choose a new quantity");
         database.UpdateHabit(updatedId, updatedDate, updatedQuantity);
         break;
     
     case "4":
+        // Delete data from database
         database.ViewHabit();
-        Console.WriteLine("Select a Id you wish to delete");
-        int deletedId = int.Parse(Console.ReadLine());
+        int deletedId = GetValidInt("Select the Id you wish to delete");
         database.DeleteHabit(deletedId);
         break;
+}
+
+// Method to check for valid input for int. 
+int GetValidInt(string message)
+{
+    while (true)
+    {
+        Console.WriteLine(message);
+        string input = Console.ReadLine();
+
+        try
+        {
+            return int.Parse(input);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Invalid input, please enter a number.");
+        }
+    }
+    
 }
